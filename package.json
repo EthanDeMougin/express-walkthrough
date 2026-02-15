@@ -1,0 +1,19 @@
+{
+  "name": "express-walkthrough",
+  "version": "1.0.0",
+  "description": "school",
+  "repository": {
+    "type": "git",
+    "url": "express-walkthrough"
+  },
+  "license": "ISC",
+  "author": "ethan",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
