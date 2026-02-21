@@ -1,12 +1,34 @@
 //Setup/ similar to html
 const express = require("express")
 //To host front end and back end on the same device
-var cors = require('cors')
 //Activates app variable 
 const app = express()
-app.use(cors())
 const router = express.Router()
+const bodyParser = require('body-parser')
+const Song = require("./models/songs");
+app.use(bodyParser.json())
 
+//grab all the songs in a database
+router.get("/songs", async (req,res) => {
+    try {
+        const songs = await Song.find({})
+        res.send(songs)
+        console.log(songs)
+    }
+    catch(err) {
+        console.log(err)
+        res.status(500).send(err)
+    }
+
+    //to find all songs in a database, we use the find method on the model
+    //Song.find(query, function(err,songs){
+        //if(err){
+            //res.status(500).send(err)}
+        //else{
+            //res.json(songs)
+        //}
+    //})
+})
 
 //Start the web server... app.listen(portnumber, function)
 //app.listen(3000, function(){
@@ -27,24 +49,7 @@ const router = express.Router()
     //res.send("<h1>Goodbye, Express</h1>")
 //})
 
-//
-router.get("/songs", function(req,res){
-    const songs = [
-        {    
-            title: "Uptown Funk",
-            artist: "Bruno Mars",
-            popularity: 10,
-            genre: ["funk", "boogie"]
-        },
-        {
-            title: "Uptown Funk",
-            artist: "Bruno Mars",
-            popularity: 10,
-            genre: ["funk", "boogie"]
-        }
-    ];
-    res.json(songs)
-})
+
 
 //All requests that usually use an api start with /api... so the url would be http://localhost:3000/api/songs
 app.use("/api", router)
