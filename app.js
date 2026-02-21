@@ -7,7 +7,9 @@ const router = express.Router()
 const bodyParser = require('body-parser')
 const Song = require("./models/songs");
 app.use(bodyParser.json())
+var cors = require('cors')
 
+app.use(cors())
 //grab all the songs in a database
 router.get("/songs", async (req,res) => {
     try {
@@ -17,7 +19,6 @@ router.get("/songs", async (req,res) => {
     }
     catch(err) {
         console.log(err)
-        res.status(500).send(err)
     }
 
     //to find all songs in a database, we use the find method on the model
@@ -28,6 +29,18 @@ router.get("/songs", async (req,res) => {
             //res.json(songs)
         //}
     //})
+})
+
+router.post("/songs", async (req,res) => {
+    try {
+        const song = await new Song(req.body)
+        await song.save()
+        res.status(201).json(song)
+        console.log(song)
+    }
+    catch(err) {
+        res.status(400).send(err)
+    }
 })
 
 //Start the web server... app.listen(portnumber, function)
